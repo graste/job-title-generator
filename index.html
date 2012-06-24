@@ -66,6 +66,16 @@
 
 #generate_button {
 }
+
+#controls>div
+{
+    margin-top: 1em;
+}
+
+footer {
+    margin-top: 1em;
+    text-align: center;
+}
 </style>
 <title>Business Job Title Generator</title>
 </head>
@@ -81,14 +91,30 @@
 </div>
 
 <hr>
+
 <div id="controls">
-    <button id="generate_button">Generate new title!</button>
+    <div class="customize_name">
+        <label>First name: <input type="text" name="first_name" id="first_name" value="John M." /></label>
+        <label>Last name: <input type="text" name="last_name" id="last_name" value="Doe" /></label>
+    </div>
+    <div class="customize_title">
+        <label>1st<input type="range" name="title_first" id="title_first" min="0" value="0" max="50" /></label>
+        <label>2nd<input type="range" name="title_second" id="title_second" min="0" value="0" max="50" /></label>
+        <label>3rd<input type="range" name="title_third" id="title_third" min="0" value="0" max="50" /></label>
+    </div>
+    <div class="customize_title">
+        <button id="generate_button">Generate random title</button>
+    </div>
 </div>
+
+<footer>
+
+</footer>
 </body>
 <script type="text/javascript">
 var TitleGenerator = (function(){
 
-    var parts = [
+    var title_parts = [
         [
             "Adaptive",
             "Administrative",
@@ -305,92 +331,229 @@ var TitleGenerator = (function(){
             "Trader",
             "Trainer",
             "Tutor"
-    ]
-
+        ]
     ];
 
-    var hash_delimiter = '_';
-    var dom_id = 'title_generated';
-    var base_url = document.location.href.split('#').shift();
+    var $ = function(selector, base_element)
+    {
+        if (!base_element)
+        {
+            base_element = document;
+        }
 
-    var build_title = function(indexes) {
-        var i;
-        var title = '';
+        return base_element.querySelector(selector);
+    };
 
-        for (i in indexes) {
-            if (indexes.hasOwnProperty(i)) {
-                if (i > 0) {
+    var build_title = function(indexes)
+    {
+        var i, title = '';
+
+        for (i in indexes)
+        {
+            if (indexes.hasOwnProperty(i))
+            {
+                if (i > 0)
+                {
                     title = title + ' ';
                 }
-                title = title + parts[i][indexes[i]];
+                title = title + title_parts[i][indexes[i]];
             }
         }
 
         return title;
-    }
+    };
 
-    var build_hash = function(indexes) {
+    var build_hash = function(indexes)
+    {
         return indexes.join(hash_delimiter);
-    }
+    };
 
-    var render_title = function(indexes, id) {
-        document.getElementById(dom_id).innerHTML = build_title(indexes);
+    var render_title = function(indexes, id)
+    {
+        var new_title = build_title(indexes);
+        var new_hash = '#' + build_hash(indexes);
 
-//        document.location.hash = build_hash(indexes);
-        document.location.href = base_url + '#' + build_hash(indexes);
-    }
+        generated_title.innerHTML = new_title;
 
+        update_range_inputs(indexes);
 
-    var recall_hash= function(hash) {
+        if (window.history && window.history.pushState)
+        {
+            window.history.pushState({}, new_title, new_hash);
+        }
+        else
+        {
+            document.location.href = base_url + new_hash;
+        }
+    };
+
+    var generate_jobtitle = function(hash)
+    {
+        if (!hash)
+        {
+            return;
+        }
+
         var i, n, indexes;
+
         hash = hash.substring(1);
-            
         indexes = hash.split(hash_delimiter);
 
         render_title(indexes);
     };
 
-    var generate = function(){
-        var i;
-        var n;
-        var indexes = [];
-        var hash = '';
-
-        for (i in parts) {
-            if (parts.hasOwnProperty(i)) {
-                n = Math.floor(Math.random()*parts[i].length);
-                indexes.push(n); 
+    var generate_random_jobtitle = function()
+    {
+        var i, n, indexes = [], hash = '';
+       
+        for (i in title_parts)
+        {
+            if (title_parts.hasOwnProperty(i))
+            {
+                indexes.push(Math.floor(Math.random() * title_parts[i].length));
             }
         }
 
         render_title(indexes);
     }
 
-    document.getElementById('generate_button').addEventListener('click', generate, false);
+    var title_count = function()
+    {
+        var i, num = 1;
+
+        for (i in title_parts)
+        {
+            if (title_parts.hasOwnProperty(i))
+            {
+                num *= title_parts[i].length;
+            }
+        }
+
+        return num;
+    };
+
+    var update_footer = function()
+    {
+        $('footer').innerHTML = 'There are ' + title_count() + ' job titles available. One\'s for you! :-)';
+    };
+
+    var update_range_inputs = function(indexes)
+    {
+        for (var i in indexes)
+        {
+            if (indexes.hasOwnProperty(i))
+            {
+                title_part_inputs[i].value = indexes[i];
+            }
+        }
+    };
+
+    var hash_delimiter = '_';
+    var hash_pattern = new RegExp('#\\d+'+hash_delimiter+'\\d+'+hash_delimiter+'\\d+');
+    var base_url = document.location.href.split('#').shift();
+
+    var generated_title = document.getElementById('title_generated');
+
+    var generate_button = document.getElementById('generate_button');
+    generate_button.addEventListener('click', generate_random_jobtitle, false);
+    
+    var first_name_input = document.getElementById('first_name');
+    var last_name_input = document.getElementById('last_name');
+
+    var first_name = $('#card_box_3d .first_name');
+    var last_name = $('#card_box_3d .last_name');
+
+    var title_part_inputs = [
+        document.getElementById('title_first'),
+        document.getElementById('title_second'),
+        document.getElementById('title_third')
+    ];
+
+    // initialize sliders with number of available words
+    for (i in title_parts)
+    {
+        if (title_parts.hasOwnProperty(i))
+        {
+            title_part_inputs[i].min = 0;
+            title_part_inputs[i].max = title_parts[i].length;
+            title_part_inputs[i].onchange = function(ev)
+            {
+                var new_indexes = [];
+
+                for (var k in title_part_inputs)
+                {
+                    if (title_part_inputs.hasOwnProperty(k))
+                    {
+                        new_indexes[k] = title_part_inputs[k].value;
+                    }
+                }
+
+                document.location.hash = '#' + build_hash(new_indexes);
+            };
+        }
+    }
+
+    first_name_input.addEventListener('change', function()
+    {
+        first_name.innerHTML = this.value;
+    }, false);
+
+    first_name_input.addEventListener('keyup', function()
+    {
+        first_name.innerHTML = this.value;
+    }, false);
+
+    last_name_input.addEventListener('keyup', function()
+    {
+        last_name.innerHTML = this.value;
+    }, false);
+
+    last_name_input.addEventListener('change', function()
+    {
+        last_name.innerHTML = this.value;
+    }, false);
+
+    if ("onhashchange" in window)
+    {
+        var hash_changed = function()
+        {
+            if (hash_pattern.test(document.location.hash))
+            {
+                generate_jobtitle(window.location.hash);
+            }
+        }
+
+        window.addEventListener("hashchange", hash_changed, false);
+    }
 
     return {
-        show: function() {
-            if (document.location.hash) {
-                recall_hash(document.location.hash);
-            } else {
-                generate();
+        show: function()
+        {
+            update_footer();
+
+            if (document.location.hash && hash_pattern.test(document.location.hash))
+            {
+                generate_jobtitle(document.location.hash);
+            }
+            else
+            {
+                generate_random_jobtitle();
             }
         },
-        getTitleCount: function() {
-            var i;
-            var s = 1;
-            for (i in parts) {
-                if (parts.hasOwnProperty(i)) {
-                    s = s * parts[i].length;
-                }
-            }
 
-            return s;
+        getTitleCount: function()
+        {
+            return title_count();
         }
     };
 })();
 
-console.log(TitleGenerator.getTitleCount());
+if (window.console && console.log)
+{
+    console.log('There are ', TitleGenerator.getTitleCount(), ' job titles in the database! ;-)');
+}
+
 TitleGenerator.show();
+
 </script>
 </html>
