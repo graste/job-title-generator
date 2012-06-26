@@ -601,7 +601,7 @@ var TitleGenerator = (function() {
         if (title_parts.hasOwnProperty(i))
         {
             title_part_inputs[i].min = 0;
-            title_part_inputs[i].max = title_parts[i].length;
+            title_part_inputs[i].max = title_parts[i].length -1;
             title_part_inputs[i].onchange = function(ev)
             {
                 var new_indexes = [];
