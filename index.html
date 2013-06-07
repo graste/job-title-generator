@@ -9,6 +9,108 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>Job-title-generator</title>
+
+<style type="text/css">
+
+#card_box_3d {
+    width: 600px;
+    height: 400px;
+    padding: 40px;
+    border: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.vcard {
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 100px;
+    left: 140px;
+    font-size: 16px;
+    letter-spacing: 0.3em;
+    font-weight: bold;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.vcard .name {
+    position: absolute;
+    left: 50px;
+    top: 40px;
+    width: 300px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 1.2em
+}
+
+.vcard .name div {
+    display: inline-block;
+}
+
+.vcard .title {
+    position: absolute;
+    top: 110px;
+    left: 20px;
+    width: 360px;
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.vcard .org {
+    position: absolute;
+    left: 50px;
+    top: 170px;
+    width: 300px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 0.8em
+}
+.vcard {
+    -ms-transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    -moz-transform: rotate(5deg);
+    -o-transform: rotate(5deg);
+    transform: rotate(5deg);
+/*
+    background: -webkit-linear-gradient(top, rgba(250,250,250,1) 0%,rgba(224,224,224,1) 100%);
+    background: -moz-linear-gradient(top, rgba(250,250,250,1) 0%,rgba(224,224,224,1) 100%);
+    background: -o-linear-gradient(top, rgba(250,250,250,1) 0%,rgba(224,224,224,1) 100%);
+    background: linear-gradient(top, rgba(250,250,250,1) 0%,rgba(224,224,224,1) 100%);
+*/
+    background: rgb(224,240,252);
+    background: -moz-linear-gradient(-45deg, rgba(224,240,252,1) 0%, rgba(204,234,249,1) 33%, rgba(205,231,242,1) 67%, rgba(224,243,250,1) 100%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(224,240,252,1)), color-stop(33%,rgba(204,234,249,1)), color-stop(67%,rgba(205,231,242,1)), color-stop(100%,rgba(224,243,250,1)));
+    background: -webkit-linear-gradient(-45deg, rgba(224,240,252,1) 0%,rgba(204,234,249,1) 33%,rgba(205,231,242,1) 67%,rgba(224,243,250,1) 100%);
+    background: -o-linear-gradient(-45deg, rgba(224,240,252,1) 0%,rgba(204,234,249,1) 33%,rgba(205,231,242,1) 67%,rgba(224,243,250,1) 100%);
+    background: -ms-linear-gradient(-45deg, rgba(224,240,252,1) 0%,rgba(204,234,249,1) 33%,rgba(205,231,242,1) 67%,rgba(224,243,250,1) 100%);
+    background: linear-gradient(-45deg, rgba(224,240,252,1) 0%,rgba(204,234,249,1) 33%,rgba(205,231,242,1) 67%,rgba(224,243,250,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0f0fc', endColorstr='#e0f3fa',GradientType=1 );
+
+    -webkit-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.4);
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.4);
+}
+
+#controls {
+    margin: 0 auto;
+    width: auto;
+    text-align: center;
+}
+
+#generate_button {
+}
+
+#controls > div
+{
+    margin-top: 1em;
+}
+
+#header_wrap .inner {
+    padding: 0;
+}
+</style>
+
   </head>
 
   <body>
@@ -18,7 +120,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/graste/job-title-generator">View on GitHub</a>
 
-          <h1 id="project_title">Job-title-generator</h1>
+          <h1 id="project_title">Job Title Generator</h1>
           <h2 id="project_tagline"></h2>
 
             <section id="downloads">
@@ -31,24 +133,55 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>Job Title Generator</h1>
 
 <p>Are you in need of a new title for your business card? The ones you know
-aren't cool enough? How about some awesome suggestions?</p>
-
-<p>Generate yourself a new title here: <a href="http://graste.github.com/job-title-generator/">http://graste.github.com/job-title-generator/</a></p>
+aren't cool enough? How about some awesome suggestions? Generate one!</p>
 
 <blockquote>
 <p>Firefox needs some default slider layout for range input types...</p>
 </blockquote>
 
+<div id="controls">
+    <div class="customize_name">
+        <label>First name: <input type="text" name="first_name" id="first_name" value="John M." /></label>
+        <label>Last name: <input type="text" name="last_name" id="last_name" value="Doe" /></label>
+    </div>
+    <div class="customize_title">
+        <label>1st<input type="range" name="title_first" id="title_first" min="0" value="0" max="50" /></label>
+        <label>2nd<input type="range" name="title_second" id="title_second" min="0" value="0" max="50" /></label>
+        <label>3rd<input type="range" name="title_third" id="title_third" min="0" value="0" max="50" /></label>
+    </div>
+    <div class="customize_title">
+        <button id="generate_button">Generate random title</button>
+    </div>
+</div>
+
+<hr />
+
+<div id="card_box_3d">
+    <div class="vcard" title="double click me..." itemscope itemtype="http://data-vocabulary.org/Person">
+        <div class="name fn" itemprop="name">
+            <span class="first_name">John M.</span>
+            <span class="last_name">Doe</span>
+        </div>
+        <div id="title_generated" class="title" itemprop="title"></div>
+        <div class="org" itemprop="affiliation">ACME Corp</div>
+    </div>
+</div>
+
+<hr />
+
+<p id="total"> </p>
+
 <p>This does not work on older browsers. Tested successfully in Opera 12, Firefox 13 and Chrome 18 using Linux.</p>
+
+<p>Generate yourself a new title here: <a href="http://graste.github.com/job-title-generator/">http://graste.github.com/job-title-generator/</a></p>
 
 <h1>Authors</h1>
 
 <ul>
-<li>Leon Weidauer</li>
-<li>Steffen Gransow</li>
+    <li><a href="https://github.com/lnwdr">Leon Weidauer</a></li>
+    <li><a href="https://github.com/graste">Steffen Gransow</a></li>
 </ul>
       </section>
     </div>
@@ -61,7 +194,550 @@ aren't cool enough? How about some awesome suggestions?</p>
       </footer>
     </div>
 
-    
+<script type="text/javascript">
+
+var TitleGenerator = (function() {
+
+    var title_parts = [
+        [
+            "Adaptive",
+            "Administrative",
+            "Assistant",
+            "Authorized",
+            "Autonomous",
+            "B2B",
+            "B2C",
+            "Best Practice",
+            "Chief",
+            "Civilian",
+            "Collaborative",
+            "Collective",
+            "Common",
+            "Company",
+            "Consumer",
+            "Corporate",
+            "Creative",
+            "Customer",
+            "Distributed",
+            "Domestic",
+            "Dynamic",
+            "Educational",
+            "Enterprise",
+            "Essential",
+            "Exclusive",
+            "Executive",
+            "Federal",
+            "First",
+            "First Level",
+            "Foreign",
+            "Future",
+            "General",
+            "Global",
+            "Granular",
+            "Head",
+            "Holistic",
+            "Independent",
+            "Innovative",
+            "Interactive",
+            "Interim",
+            "International",
+            "Intuitive",
+            "Lead",
+            "Legal",
+            "Local",
+            "Major",
+            "Minor",
+            "Offshore",
+            "Opensource",
+            "Organic",
+            "Partial",
+            "Planetary",
+            "Premium",
+            "Proactive",
+            "Professional",
+            "Public",
+            "Qualified",
+            "Realtime",
+            "Regional",
+            "Responsible",
+            "Retail",
+            "Robust",
+            "Scalable",
+            "Seamless",
+            "Second Level",
+            "Secondary",
+            "Senior",
+            "Social",
+            "Static",
+            "Strategic",
+            "Structural",
+            "Superior",
+            "Target",
+            "Third Level",
+            "Universal",
+            "Ubiquitous",
+            "Vice",
+            "Vintage",
+            "Viral",
+            "Virtual",
+            "Worldwide"
+        ],[
+            "Account",
+            "Advertising",
+            "Advice",
+            "Applications",
+            "Art",
+            "Assembly",
+            "Asset",
+            "Assurance",
+            "Audit",
+            "Balance",
+            "Benchmark",
+            "Brand",
+            "Budget",
+            "Business",
+            "Career",
+            "Case",
+            "Change",
+            "Channel",
+            "Cloud",
+            "Collaboration",
+            "Commitment",
+            "Committee",
+            "Communications",
+            "Community",
+            "Competition",
+            "Component",
+            "Conception",
+            "Confidence",
+            "Construction",
+            "Content",
+            "Contract",
+            "Convergence",
+            "Cost",
+            "Creative",
+            "Credit",
+            "Crisis",
+            "Cross-media",
+            "Cross-platform",
+            "Cultivation",
+            "Customer",
+            "Deliverable",
+            "Delivery",
+            "Deployment",
+            "Design",
+            "Development",
+            "Distribution",
+            "E-Business",
+            "E-Commerce",
+            "Education",
+            "E-Markets",
+            "Embracement",
+            "Employment",
+            "Enhancement",
+            "Enduser",
+            "Engagement",
+            "Equity",
+            "E-Services",
+            "Ethics",
+            "Event",
+            "Evolution",
+            "Evolvement",
+            "Export",
+            "Facility",
+            "Finance",
+            "Governance",
+            "Guidance",
+            "Group",
+            "Health Care",
+            "Helpdesk",
+            "Heritage",
+            "Human Resources",
+            "IT",
+            "Implementation",
+            "Import",
+            "Incentive",
+            "Industry",
+            "Infrastructure",
+            "Innovation",
+            "Insurance",
+            "Interaction",
+            "Interface",
+            "Investment",
+            "Iteration",
+            "Knowledge",
+            "Law",
+            "Leverage",
+            "Loan",
+            "Logic",
+            "Logistics",
+            "Loyalty",
+            "Management",
+            "Market",
+            "Marketing",
+            "Matrix",
+            "M-Commerce",
+            "Media",
+            "Merchandise",
+            "Methodologies",
+            "Metrics",
+            "Model",
+            "Monetization",
+            "Monitoring",
+            "Network",
+            "Niches",
+            "Offshoring",
+            "Operations",
+            "Opportunity",
+            "Optimisation",
+            "Orchestration",
+            "Order",
+            "Outsourcing",
+            "Paradigms",
+            "Partnerships",
+            "Payroll",
+            "Performance",
+            "Planning",
+            "Policy",
+            "Portal",
+            "Positioning",
+            "Privacy",
+            "Process",
+            "Product",
+            "Product Lifecycle",
+            "Production",
+            "Profit",
+            "Project",
+            "Promotion",
+            "Propaganda",
+            "Property",
+            "Publicity",
+            "Quality",
+            "Real Estate",
+            "Relations",
+            "Reproduction",
+            "Research",
+            "Resource",
+            "Responsibility",
+            "Risk",
+            "ROI",
+            "Sales",
+            "Sanitation",
+            "Security",
+            "Service",
+            "Social",
+            "Social Media",
+            "Solution",
+            "Supply Chain",
+            "Support",
+            "Sustainability",
+            "Syndicate",
+            "Talent",
+            "Target",
+            "Taxation",
+            "Technology",
+            "Therapy",
+            "Trade",
+            "Trademark",
+            "Trading",
+            "Training",
+            "Transaction",
+            "Transparancy",
+            "Transportation",
+            "Travel",
+            "User",
+            "User Experience",
+            "Value",
+            "Visionary",
+            "Wireless",
+            "Web" 
+        ],[
+            "Accountant",
+            "Administrator",
+            "Advisor",
+            "Advocate",
+            "Agent",
+            "Analyst",
+            "Architect",
+            "Artist",
+            "Attourney",
+            "Authority",
+            "Broker",
+            "Chairman",
+            "Chairperson",
+            "Coach",
+            "Consultant",
+            "Controller",
+            "Coordinator",
+            "Director",
+            "Dispatcher",
+            "Editor",
+            "Enabler",
+            "Enforcer",
+            "Engineer",
+            "Enthusiast",
+            "Evangelist",
+            "Expert",
+            "Guru",
+            "Instructor",
+            "Knowledgarian",
+            "Lawyer",
+            "Manager",
+            "Manufacturer",
+            "Marshall",
+            "Mentor",
+            "Modeler",
+            "Officer",
+            "Opener",
+            "Operator",
+            "Orchestrator",
+            "Partner",
+            "Practitioner",
+            "President",
+            "Principal",
+            "Provider",
+            "Regent",
+            "Secretary",
+            "Specialist",
+            "Strategist",
+            "Supervisor",
+            "Technician",
+            "Trader",
+            "Trainer",
+            "Tutor",
+            "Visionary"
+        ]
+    ];
+
+    var $ = function(selector, base_element)
+    {
+        if (!base_element)
+        {
+            base_element = document;
+        }
+
+        return base_element.querySelector(selector);
+    };
+
+    var build_title = function(indexes)
+    {
+        var i, title = '';
+
+        for (i in indexes)
+        {
+            if (indexes.hasOwnProperty(i))
+            {
+                if (i > 0)
+                {
+                    title = title + ' ';
+                }
+                title = title + title_parts[i][indexes[i]];
+            }
+        }
+
+        return title;
+    };
+
+    var build_hash = function(indexes)
+    {
+        return indexes.join(hash_delimiter);
+    };
+
+    var render_title = function(indexes, id)
+    {
+        var new_title = build_title(indexes);
+        var new_hash = '#' + build_hash(indexes);
+
+        generated_title.innerHTML = new_title;
+
+        update_range_inputs(indexes);
+
+        if (window.history && window.history.pushState)
+        {
+            window.history.pushState({}, new_title, new_hash);
+        }
+        else
+        {
+            document.location.href = base_url + new_hash;
+        }
+    };
+
+    var generate_jobtitle = function(hash)
+    {
+        if (!hash)
+        {
+            return;
+        }
+
+        var i, n, indexes;
+
+        hash = hash.substring(1);
+        indexes = hash.split(hash_delimiter);
+
+        render_title(indexes);
+    };
+
+    var generate_random_jobtitle = function()
+    {
+        var i, n, indexes = [], hash = '';
+
+        for (i in title_parts)
+        {
+            if (title_parts.hasOwnProperty(i))
+            {
+                indexes.push(Math.floor(Math.random() * title_parts[i].length));
+            }
+        }
+
+        render_title(indexes);
+    }
+
+    var title_count = function()
+    {
+        var i, num = 1;
+
+        for (i in title_parts)
+        {
+            if (title_parts.hasOwnProperty(i))
+            {
+                num *= title_parts[i].length;
+            }
+        }
+
+        return num;
+    };
+
+    var update_footer = function()
+    {
+        $('total').innerHTML = 'There are ' + title_count() + ' job titles available. One\'s for you! :-)';
+    };
+
+    var update_range_inputs = function(indexes)
+    {
+        for (var i in indexes)
+        {
+            if (indexes.hasOwnProperty(i))
+            {
+                title_part_inputs[i].value = indexes[i];
+            }
+        }
+    };
+
+    var hash_delimiter = '_';
+    var hash_pattern = new RegExp('#\\d+'+hash_delimiter+'\\d+'+hash_delimiter+'\\d+');
+    var base_url = document.location.href.split('#').shift();
+
+    var generated_title = document.getElementById('title_generated');
+
+    var generate_button = document.getElementById('generate_button');
+    generate_button.addEventListener('click', generate_random_jobtitle, false);
+
+    var first_name_input = document.getElementById('first_name');
+    var last_name_input = document.getElementById('last_name');
+
+    var first_name = $('#card_box_3d .first_name');
+    var last_name = $('#card_box_3d .last_name');
+
+    var card = $('#card_box_3d .vcard');
+
+    var title_part_inputs = [
+        document.getElementById('title_first'),
+        document.getElementById('title_second'),
+        document.getElementById('title_third')
+    ];
+
+    // initialize sliders with number of available words
+    for (i in title_parts)
+    {
+        if (title_parts.hasOwnProperty(i))
+        {
+            title_part_inputs[i].min = 0;
+            title_part_inputs[i].max = title_parts[i].length -1;
+            title_part_inputs[i].onchange = function(ev)
+            {
+                var new_indexes = [];
+
+                for (var k in title_part_inputs)
+                {
+                    if (title_part_inputs.hasOwnProperty(k))
+                    {
+                        new_indexes[k] = title_part_inputs[k].value;
+                    }
+                }
+
+                document.location.hash = '#' + build_hash(new_indexes);
+            };
+        }
+    }
+
+    first_name_input.addEventListener('change', function()
+    {
+        first_name.innerHTML = this.value;
+    }, false);
+
+    first_name_input.addEventListener('keyup', function()
+    {
+        first_name.innerHTML = this.value;
+    }, false);
+
+    last_name_input.addEventListener('keyup', function()
+    {
+        last_name.innerHTML = this.value;
+    }, false);
+
+    last_name_input.addEventListener('change', function()
+    {
+        last_name.innerHTML = this.value;
+    }, false);
+
+    card.addEventListener('dblclick', function()
+    {
+        generate_random_jobtitle();
+    }, false);
+
+    if ("onhashchange" in window)
+    {
+        var hash_changed = function()
+        {
+            if (hash_pattern.test(document.location.hash))
+            {
+                generate_jobtitle(window.location.hash);
+            }
+        }
+
+        window.addEventListener("hashchange", hash_changed, false);
+    }
+
+    return {
+        show: function()
+        {
+            update_footer();
+
+            if (document.location.hash && hash_pattern.test(document.location.hash))
+            {
+                generate_jobtitle(document.location.hash);
+            }
+            else
+            {
+                generate_random_jobtitle();
+            }
+        },
+
+        getTitleCount: function()
+        {
+            return title_count();
+        }
+    };
+})();
+
+if (window.console && console.log)
+{
+    console.log('There are ', TitleGenerator.getTitleCount(), ' job titles in the database! ;-)');
+}
+
+TitleGenerator.show();
+
+</script>
 
   </body>
 </html>
