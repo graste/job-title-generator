@@ -156,7 +156,8 @@ aren't cool enough? How about some awesome suggestions? Generate one!</p>
 <div id="controls">
     <div class="customize_name">
         <label>First name: <input type="text" name="first_name" id="first_name" value="John M." /></label>
-        <label>Last name: <input type="text" name="last_name" id="last_name" value="Doe" /></label>
+        <label>Last name: <input type="text" name="last_name" id="last_name" value="Doe" /></label> <br />
+        <label>Company: <input type="text" name="company_name" id="company_name" value="ACME Corp." /></label>
     </div>
     <div class="customize_title">
         <label>1st<input type="range" name="title_first" id="title_first" min="0" value="0" max="50" /></label>
@@ -177,7 +178,7 @@ aren't cool enough? How about some awesome suggestions? Generate one!</p>
             <span class="last_name">Doe</span>
         </div>
         <div id="title_generated" class="title" itemprop="title"></div>
-        <div class="org" itemprop="affiliation">ACME Corp</div>
+        <div class="org company_name" itemprop="affiliation">ACME Corp</div>
     </div>
 </div>
 
@@ -349,6 +350,7 @@ var TitleGenerator = (function() {
             "Enhancement",
             "Enduser",
             "Engagement",
+            "Engineering",
             "Equity",
             "E-Services",
             "Ethics",
@@ -361,6 +363,7 @@ var TitleGenerator = (function() {
             "Governance",
             "Guidance",
             "Group",
+            "Hardware",
             "Health Care",
             "Helpdesk",
             "Heritage",
@@ -439,6 +442,7 @@ var TitleGenerator = (function() {
             "Service",
             "Social",
             "Social Media",
+            "Software",
             "Solution",
             "Supply Chain",
             "Support",
@@ -496,6 +500,7 @@ var TitleGenerator = (function() {
             "Lawyer",
             "Manager",
             "Manufacturer",
+            "Man of Mystery",
             "Marshall",
             "Mentor",
             "Modeler",
@@ -517,7 +522,8 @@ var TitleGenerator = (function() {
             "Trader",
             "Trainer",
             "Tutor",
-            "Visionary"
+            "Visionary",
+            "Woman of Mystery"
         ]
     ];
 
@@ -635,6 +641,35 @@ var TitleGenerator = (function() {
         }
     };
 
+    var query_params = "unset";
+    var get_query_param = function(name)
+    {
+        if (query_params !== "unset")
+        {
+            return query_params[name];
+        }
+
+        query_params = [];
+        var query = window.location.search.substring(1);
+        var params = query.split('&');
+        var pos = 0;
+        for (var i=0, len=params.length; i < len; i++)
+        {
+            pos = params[i].indexOf('=');
+            if (pos > 0)
+            {
+                query_params[decodeURIComponent(params[i].substring(0, pos))] = decodeURIComponent(params[i].substring(pos + 1));
+            }
+        }
+    };
+
+    var trigger_change_event = function(element)
+    {
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", false, true);
+        element.dispatchEvent(evt);
+    };
+
     var hash_delimiter = '_';
     var hash_pattern = new RegExp('#\\d+'+hash_delimiter+'\\d+'+hash_delimiter+'\\d+');
     var base_url = document.location.href.split('#').shift();
@@ -646,9 +681,11 @@ var TitleGenerator = (function() {
 
     var first_name_input = document.getElementById('first_name');
     var last_name_input = document.getElementById('last_name');
+    var company_name_input = document.getElementById('company_name');
 
     var first_name = $('#card_box_3d .first_name');
     var last_name = $('#card_box_3d .last_name');
+    var company_name = $('#card_box_3d .company_name');
 
     var card = $('#card_box_3d .vcard');
 
@@ -702,6 +739,16 @@ var TitleGenerator = (function() {
         last_name.innerHTML = this.value;
     }, false);
 
+    company_name_input.addEventListener('change', function()
+    {
+        company_name.innerHTML = this.value;
+    }, false);
+
+    company_name_input.addEventListener('keyup', function()
+    {
+        company_name.innerHTML = this.value;
+    }, false);
+
     card.addEventListener('dblclick', function()
     {
         generate_random_jobtitle();
@@ -724,6 +771,14 @@ var TitleGenerator = (function() {
         show: function()
         {
             update_footer();
+
+            first_name_input.value = get_query_param('firstname') || 'John';
+            last_name_input.value = get_query_param('lastname') || 'M. Doe';
+            company_name_input.value = get_query_param('company') || 'ACME Corp.';
+
+            trigger_change_event(first_name_input);
+            trigger_change_event(last_name_input);
+            trigger_change_event(company_name_input);
 
             if (document.location.hash && hash_pattern.test(document.location.hash))
             {
