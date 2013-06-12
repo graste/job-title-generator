@@ -661,6 +661,8 @@ var TitleGenerator = (function() {
                 query_params[decodeURIComponent(params[i].substring(0, pos))] = decodeURIComponent(params[i].substring(pos + 1));
             }
         }
+
+        return query_params[name];
     };
 
     var trigger_change_event = function(element)
