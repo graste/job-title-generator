@@ -11,6 +11,6 @@ This does not work on older browsers. Tested successfully in Opera 12, Firefox 1
 
 # Authors
 
-* Leon Weidauer
-* Steffen Gransow
+* [Leon Weidauer](https://github.com/lnwdr)
+* [Steffen Gransow](https://github.com/graste)
 
