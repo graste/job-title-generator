@@ -166,8 +166,8 @@ input {
         <div id="card_box_3d">
             <div class="vcard" title="Double click me to generate a new one..." itemscope itemtype="http://data-vocabulary.org/Person">
                 <div class="name fn" itemprop="name">
-                    <span class="first_name">John M.</span>
-                    <span class="last_name">Doe</span>
+                    <span class="first_name"></span>
+                    <span class="last_name"></span>
                 </div>
                 <div id="title_generated" class="title" itemprop="title"></div>
                 <div class="org company_name" itemprop="affiliation">ACME Corp</div>
@@ -179,9 +179,10 @@ input {
                 <button id="generate_button">Generate random job title…</button>
             </div>
             <div class="customize_name">
-                <label for="first_name">First name:</label><input type="text" name="first_name" id="first_name" value="John M." />
-                <label for="last_name">Last name:</label><input type="text" name="last_name" id="last_name" value="Doe" />
-                <label for="company_name">Company:</label><input type="text" name="company_name" id="company_name" value="ACME Corp." />
+                <label for="first_name">First name:</label><input type="text" name="first_name"
+                id="first_name" value="" />
+                <label for="last_name">Last name:</label><input type="text" name="last_name" id="last_name" value="" />
+                <label for="company_name">Company:</label><input type="text" name="company_name" id="company_name" value="" />
             </div>
             <div class="customize_title">
                 <label for="title_first">1st</label><input type="range" name="title_first" id="title_first" min="0" value="0" max="50" />
@@ -215,6 +216,11 @@ input {
 <script type="text/javascript">
 
 var TitleGenerator = (function() {
+
+    var first_names = [
+        "Jane",
+        "John"
+    ];
 
     var title_parts = [
         [
@@ -672,7 +678,11 @@ var TitleGenerator = (function() {
         }
 
         render_title(indexes);
-    }
+    };
+
+    var generate_first_name = function() {
+        return first_names[Math.floor(Math.random() * first_names.length)];
+    };
 
     var title_count = function() {
         var i, num = 1;
@@ -810,7 +820,7 @@ var TitleGenerator = (function() {
         show: function() {
             update_footer();
 
-            first_name_input.value = get_query_param('firstname') || 'John';
+            first_name_input.value = get_query_param('firstname') || generate_first_name();
             last_name_input.value = get_query_param('lastname') || 'M. Doe';
             company_name_input.value = get_query_param('company') || 'ACME Corp.';
 
